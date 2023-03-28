@@ -81,6 +81,17 @@ if __name__ == '__main__':
     import torchvision.datasets as dset
     import torchvision.transforms as transforms
 
+    # I need to load my datasets tp replace the CIFAR10
+    # the datasets contain 10000 images, each image is 256x256x3
+    # located in the folder "./sample"
+
+    mydata = dset.ImageFolder(root='./sample',
+                                transform=transforms.Compose([
+                                    transforms.Scale(32),
+                                    transforms.ToTensor(),
+                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                                ]))
+
     cifar = dset.CIFAR10(root='data/', download=True,
                              transform=transforms.Compose([
                                  transforms.Scale(32),
