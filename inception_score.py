@@ -85,22 +85,22 @@ if __name__ == '__main__':
     # the datasets contain 10000 images, each image is 256x256x3
     # located in the folder "./sample"
 
-    mydata = dset.ImageFolder(root='./sample',
+    mydata = dset.ImageFolder(root='./data',
                                 transform=transforms.Compose([
-                                    transforms.Scale(32),
+                                    transforms.Resize([256, 256]),
                                     transforms.ToTensor(),
                                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
                                 ]))
 
-    cifar = dset.CIFAR10(root='data/', download=True,
-                             transform=transforms.Compose([
-                                 transforms.Scale(32),
-                                 transforms.ToTensor(),
-                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-                             ])
-    )
+    # cifar = dset.CIFAR10(root='data/', download=True,
+    #                          transform=transforms.Compose([
+    #                              transforms.Scale(32),
+    #                              transforms.ToTensor(),
+    #                              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    #                          ])
+    # )
 
-    IgnoreLabelDataset(cifar)
+    IgnoreLabelDataset(mydata)
 
     print ("Calculating Inception Score...")
-    print (inception_score(IgnoreLabelDataset(cifar), cuda=True, batch_size=32, resize=True, splits=10))
+    print (inception_score(IgnoreLabelDataset(mydata), cuda=True, batch_size=32, resize=True, splits=10))
